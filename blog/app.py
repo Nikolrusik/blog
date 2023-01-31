@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, render_template
 from blog.views.users import users_app
 from blog.views.articles import articles_app
@@ -6,15 +8,15 @@ from blog import commands
 from blog.views.auth import auth_app, login_manager
 
 app = Flask(__name__)
+load_dotenv()
 
 # Configs
-app.config['SECRET_KEY'] = "secret_key"
+cfg_name = os.environ.get("CONFIG_NAME")
+app.config.from_object(f"blog.config.{cfg_name}")
 login_manager.init_app(app)
 
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['SQLACHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 app.cli.add_command(commands.init_db)
 app.cli.add_command(commands.create_users)

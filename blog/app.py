@@ -7,12 +7,15 @@ from blog.views.auth import auth_app, login_manager
 
 app = Flask(__name__)
 
+# Configs
+app.config['SECRET_KEY'] = "secret_key"
+login_manager.init_app(app)
+
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLACHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
-login_manager.init_app(app)
 app.cli.add_command(commands.init_db)
 app.cli.add_command(commands.create_users)
 

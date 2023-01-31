@@ -18,7 +18,7 @@ def create_users():
     flask create-users
     > done! created users: <User #1 'admin'> <User #2 'james'>
     """
-    from blog.models import User
+    from blog.models.user import User
     admin = User(username='admin', is_staff=True)
     james = User(username='james')
 

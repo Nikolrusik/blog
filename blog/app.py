@@ -3,16 +3,19 @@ from dotenv import load_dotenv
 from flask import Flask, render_template
 from blog.views.users import users_app
 from blog.views.articles import articles_app
+from flask_migrate import Migrate
 from blog.models.database import db
 from blog import commands
 from blog.views.auth import auth_app, login_manager
 
 app = Flask(__name__)
+migrate = Migrate(app, db, compare_type=True)
 load_dotenv()
 
 # Configs
 cfg_name = os.environ.get("CONFIG_NAME")
 app.config.from_object(f"blog.config.{cfg_name}")
+
 login_manager.init_app(app)
 
 

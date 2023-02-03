@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, validators, PasswordField, SubmitField
 
+
 class UserBaseForm(FlaskForm):
     first_name = StringField("First name")
     last_name = StringField("Last name")
@@ -15,6 +16,7 @@ class UserBaseForm(FlaskForm):
         filters=[lambda data: data and data.lower()],
     )
 
+
 class RegistrationForm(UserBaseForm):
     password = PasswordField(
         "New password",
@@ -25,3 +27,9 @@ class RegistrationForm(UserBaseForm):
     )
     confirm = PasswordField("Repeat password")
     submit = SubmitField("Register")
+
+
+class LoginForm(FlaskForm):
+    username = StringField("username", [validators.DataRequired()])
+    password = StringField("password", [validators.DataRequired()])
+    submit = SubmitField('Login')

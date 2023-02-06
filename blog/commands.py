@@ -2,8 +2,10 @@ from blog.models.database import db
 import click
 
 # DB Commands
+
+
 @click.command('create-admin')
-def create_users():
+def create_admin():
     """
     Run in your terminal:
     flask create-admin

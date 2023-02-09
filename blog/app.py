@@ -13,7 +13,6 @@ from blog.views.authors import authors_app
 app = Flask(__name__)
 
 flask_bcrypt.init_app(app)
-migrate = Migrate(app, db, compare_type=True)
 load_dotenv()
 
 # Configs
@@ -27,6 +26,8 @@ login_manager.init_app(app)
 
 # Database
 db.init_app(app)
+migrate = Migrate(app, db, compare_type=True)
+migrate.init_app(app, db)
 app.cli.add_command(commands.create_admin)
 
 # Blueprints

@@ -2,27 +2,28 @@ version: '3.5'
 
 services:
   app:
-    build: 
+    build:
       dockerfile: ./Dockerfile
       context: .
     environment:
-      SQLALCHEMY_DATABASE_URI: postgresql://user:password@pg:5432/blog
+      SQLALCHEMY_DATABASE_URI: postgresql://user:password@database:5432/blog
       CONFIG_NAME: DevConfig
     volumes:
-    - ./blog:/app/blog
+      - ./blog:/app/blog
     ports:
       - 5000:5000
     depends_on:
-      - pg
-  pg:
+      - database
+
+  database:
     image: postgres:12
-    environment: 
+    environment:
       POSTGRES_DB: blog
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      PGDATA: /var/lib/postgresql/data/pgdata
+      # PGDATA: /var/lib/postgresql/data
     volumes:
-      - pgdata:/var/lib/postgresql/data/pgdata
+      - pgdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
 

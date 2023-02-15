@@ -8,11 +8,11 @@ from blog.models.database import db
 from blog import commands
 from blog.views.auth import auth_app, login_manager
 from blog.security import flask_bcrypt
+from blog.views.authors import authors_app
 
 app = Flask(__name__)
 
 flask_bcrypt.init_app(app)
-migrate = Migrate(app, db, compare_type=True)
 load_dotenv()
 
 # Configs
@@ -26,12 +26,15 @@ login_manager.init_app(app)
 
 # Database
 db.init_app(app)
-app.cli.add_command(commands.create_users)
+migrate = Migrate(app, db, compare_type=True)
+migrate.init_app(app, db)
+app.cli.add_command(commands.create_admin)
 
 # Blueprints
 app.register_blueprint(users_app, url_prefix="/users")
 app.register_blueprint(articles_app, url_prefix="/articles")
 app.register_blueprint(auth_app, url_prefix="/auth")
+app.register_blueprint(authors_app, url_prefix="/authors")
 
 
 # Views
